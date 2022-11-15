@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
@@ -69,7 +70,7 @@ int coroutine_start(int crfd)
         if (!cr->current)
             goto done;
         status = cr->current->job(&(cr->current->context), cr->current->args);
-
+        // printf("status: %d\n", status);
         switch (status) {
         case CR_CLONE_EXIT:
             free(cr->current);

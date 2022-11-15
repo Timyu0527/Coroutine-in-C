@@ -23,3 +23,6 @@ clean:
 rq:
 	$(CC) -o test test_fifo_runqueue.c $(LIB) $(CFLAG)
 
+heap:
+	$(CC) -o test test_heap.c $(LIB) $(CFLAG)
+

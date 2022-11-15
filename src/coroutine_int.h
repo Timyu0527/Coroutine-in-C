@@ -50,6 +50,18 @@ void rq_init(struct rq *rq);
 int rq_enqueue(struct rq *rq, struct task_struct *task);
 struct task_struct *rq_dequeue(struct rq *rq);
 
+struct heap{
+    int size;
+    struct hp_node{
+        int pri;
+        struct task_struct *task;
+    } *node[RINGBUFFER_SIZE];
+};
+
+
+void heap_init(struct heap *heap);
+int heap_insert(struct heap *heap, struct task_struct *task);
+struct task_struct *heap_delete(struct heap *heap);
 /* main data structure */
 
 #define MAX_CR_TABLE_SIZE 10
@@ -63,6 +75,7 @@ struct cr {
     /* scheduler - chose by the flags */
     struct rq rq; /* FIFO */
     struct rb_root root; /* Default */
+    struct heap heap;
 
     /* sched operations */
     int (*schedule)(struct cr *cr, job_t func, void *args);

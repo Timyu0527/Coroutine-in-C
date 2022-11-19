@@ -36,12 +36,12 @@ COROUTINE_DEFINE(myjob)
     cr_set(a, rand() % 1000);
     
 
-    printf("[@ job %d] work.\n", *(int *)args);
+    printf("[@ job %d] is working.\n", *(int *)args);
 
     cr_yield();
     usleep(1000);
 
-    printf("[# job %d] Done!\n", *(int *)args);
+    printf("[# job %d] is done!\n", *(int *)args);
 
 
     cr_end();
@@ -57,7 +57,7 @@ int main(void)
 
     for (int i = 0; i < 10; i++) {
         tfd[i] = i;
-        printf("[tfd %d] %d added, %d\n", coroutine_add(crfd, myjob, &tfd[i]), i,
+        printf("[tfd %d] %d added, %d\n", coroutine_add(crfd, job, &tfd[i]), i,
                tfd[i]);
     }
 

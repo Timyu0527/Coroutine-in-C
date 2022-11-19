@@ -5,18 +5,10 @@
 #include <errno.h>
 #include "coroutine_int.h"
 
-static inline int hp_parent(int i){
-    if(i == 0) return 0;
-    return (i - 1) >> 1;
-}
+#define hp_parent(n) ((n - 1) / 2)
+#define hp_left(n) (2 * n + 1)
+#define hp_right(n) (2 * n + 2)
 
-static inline int hp_left(int i){
-    return (i << 1) + 1;
-}
-
-static inline int hp_right(int i){
-    return (i << 1) + 2;
-}
 static inline void swap(struct hp_node **a, struct hp_node **b){
     struct hp_node *tmp = *a;
     *a = *b;

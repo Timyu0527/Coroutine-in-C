@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <unistd.h>
+#include <time.h>
 #include "../coroutine.h"
 
 COROUTINE_DEFINE(job)
@@ -16,13 +18,31 @@ COROUTINE_DEFINE(job)
     printf("[@ job %d] %d %d\n", *(int *)args, cr_dref(i), cr_dref(j));
 
     cr_yield();
+    // cr_set(i, cr_dref(i) + 1);
 
-    cr_set(i, cr_dref(i) + 1);
     if (cr_dref(arr, 4 /* index */) == 2)
         printf("array success\n");
     printf("[# job %d] %d %d\n", *(int *)args, cr_dref(i), cr_dref(j));
     if (cr_dref(k) == 2.2)
         printf("variable success\n");
+
+    cr_end();
+}
+
+COROUTINE_DEFINE(myjob)
+{
+    VAR_DEFINE(int, a);
+    cr_begin();
+    cr_set(a, rand() % 1000);
+    
+
+    printf("[@ job %d] work.\n", *(int *)args);
+
+    cr_yield();
+    usleep(1000);
+
+    printf("[# job %d] Done!\n", *(int *)args);
+
 
     cr_end();
 }
@@ -37,7 +57,7 @@ int main(void)
 
     for (int i = 0; i < 10; i++) {
         tfd[i] = i;
-        printf("[tfd %d] %d added, %d\n", coroutine_add(crfd, job, &tfd[i]), i,
+        printf("[tfd %d] %d added, %d\n", coroutine_add(crfd, myjob, &tfd[i]), i,
                tfd[i]);
     }
 

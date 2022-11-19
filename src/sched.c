@@ -132,11 +132,6 @@ static inline int rand_schedule(struct cr *cr, job_t func, void *args){
     if (!new_task)
         return -ENOMEM;
 
-    if(heap_insert(&cr->heap, new_task) < 0){
-        free(new_task);
-        return -ENOMEM;
-    }
-
     new_task->cr = cr;
     new_task->tfd = cr->size++;
     new_task->job = func;
@@ -144,6 +139,12 @@ static inline int rand_schedule(struct cr *cr, job_t func, void *args){
     new_task->context.label = NULL;
     new_task->context.wait_yield = 1;
     new_task->context.blocked = 1;
+
+    if(heap_insert(&cr->heap, new_task) < 0){
+        free(new_task);
+        return -ENOMEM;
+    }
+
 
     return new_task->tfd;
 }

@@ -23,11 +23,11 @@ void heap_init(struct heap *heap){
     }
 }
 
-int heap_insert(struct heap *heap, struct task_struct *task){
+int heap_insert(struct heap *heap, struct task_struct *task, int pri){
     if(!heap || !task) return -EAGAIN;
     if(heap->size == RINGBUFFER_SIZE) return -EAGAIN;
     heap->node[heap->size] = (struct hp_node *)calloc(1, sizeof(struct hp_node));
-    heap->node[heap->size]->pri = rand();
+    heap->node[heap->size]->pri = pri;
     // printf("task->tfd = %d\n", task->tfd);
     // heap->node[heap->size]->pri = task->tfd;
     heap->node[heap->size]->task = task;

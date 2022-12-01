@@ -60,7 +60,7 @@ struct heap{
 
 
 void heap_init(struct heap *heap);
-int heap_insert(struct heap *heap, struct task_struct *task);
+int heap_insert(struct heap *heap, struct task_struct *task, int pri);
 struct task_struct *heap_delete(struct heap *heap);
 /* main data structure */
 

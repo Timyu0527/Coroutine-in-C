@@ -55,9 +55,9 @@ int main(void)
     if (crfd < 0)
         return crfd;
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 8; i++) {
         tfd[i] = i;
-        printf("[tfd %d] %d added, %d\n", coroutine_add(crfd, job, &tfd[i]), i,
+        printf("[tfd %d] %d added, %d\n", coroutine_add(crfd, myjob, &tfd[i]), i,
                tfd[i]);
     }
 

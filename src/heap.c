@@ -39,7 +39,7 @@ int heap_insert(struct heap *heap, struct task_struct *task, int pri){
         heap->node[idx] = tmp;
         idx = hp_parent(idx);
     }
-    return 0;
+    return pri;
 }
 
 struct task_struct *heap_delete(struct heap *heap){
